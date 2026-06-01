@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///C:/Users/hatch/Downloads/hannah_budget_v2_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hannah's Budget Planner</title>
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1D9E75;
+    --green-light: #E1F5EE;
+    --green-dark: #085041;
+    --blue: #378ADD;
+    --blue-light: #E6F1FB;
+    --red: #E24B4A;
+    --red-light: #FCEBEB;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --gray-50: #F8F7F4;
+    --gray-100: #EFEDE8;
+    --gray-200: #D8D6CF;
+    --gray-400: #9B9990;
+    --gray-600: #5F5E5A;
+    --gray-900: #1C1C1A;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  header {
+    background: var(--gray-900);
+    color: white;
+    padding: 28px 24px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  header h1 {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  header .period-label {
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .saved-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    opacity: 0;
+    transition: opacity 0.4s;
+    letter-spacing: 0.05em;
+  }
+
+  .saved-badge.show { opacity: 1; }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .paycheck-section {
+    background: white;
+    margin: 20px 0 0;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    padding: 20px;
+  }
+
+  .paycheck-section label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    font-family: 'DM Mono', monospace;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .paycheck-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .paycheck-input-row span {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gray-400);
+  }
+
+  #paycheck-input {
+    font-family: 'DM Mono', monospace;
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--gray-900);
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    -moz-appearance: textfield;
+  }
+
+  #paycheck-input::-webkit-outer-spin-button,
+  #paycheck-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    font-family: 'DM Mono', monospace;
+    margin: 24px 0 10px;
+  }
+
+  .categories-card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+  }
+
+  .col-headers {
+    display: grid;
+    grid-template-columns: 1fr 80px 36px;
+    padding: 10px 16px;
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 11px;
+    color: var(--gray-400);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+
+  .col-headers span:nth-child(2) { text-align: right; padding-right: 12px; }
+
+  .category-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 36px;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-100);
+    transition: background 0.15s;
+  }
+
+  .category-row:last-child { border-bottom: none; }
+  .category-row:focus-within { background: var(--gray-50); }
+
+  .row-name {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--gray-900);
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 14px 16px;
+    width: 100%;
+  }
+
+  .row-name::placeholder { color: var(--gray-200); }
+
+  .row-amount-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 4px;
+  }
+
+  .row-amount-wrap span {
+    font-size: 14px;
+    color: var(--gray-400);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .row-amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--gray-900);
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: right;
+    width: 56px;
+    -moz-appearance: textfield;
+    padding: 14px 0;
+  }
+
+  .row-amount::-webkit-outer-spin-button,
+  .row-amount::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  .row-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-200);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 12px 0 4px;
+    transition: color 0.15s;
+    line-height: 1;
+  }
+
+  .row-delete:hover { color: var(--red); }
+
+  .add-row-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px;
+    font-size: 14px;
+    color: var(--gray-400);
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: color 0.15s;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .add-row-btn:hover { color: var(--gray-900); }
+
+  .add-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .reset-btn {
+    display: block;
+    margin: 10px auto 0;
+    background: none;
+    border: none;
+    font-size: 12px;
+    color: var(--gray-400);
+    font-family: 'DM Mono', monospace;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .reset-btn:hover { color: var(--red); }
+
+  .summary-card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 14px;
+    color: var(--gray-600);
+  }
+
+  .summary-row .val {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--gray-900);
+  }
+
+  .savings-row {
+    background: var(--green-light);
+    padding: 20px;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .savings-row .label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-dark);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 4px;
+  }
+
+  .savings-row .sublabel {
+    font-size: 12px;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+
+  .savings-amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 42px;
+    font-weight: 500;
+    color: var(--green-dark);
+    line-height: 1;
+  }
+
+  .savings-amount.negative { color: var(--red); }
+
+  .bar-wrap { margin-top: 14px; }
+
+  .bar-track {
+    height: 6px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+  }
+
+  .bar-spend {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 4px 0 0 4px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .bar-save {
+    height: 100%;
+    background: var(--green);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .bar-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--green);
+  }
+
+  .alert-box {
+    display: none;
+    background: var(--red-light);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--red);
+    font-weight: 500;
+  }
+
+  .tip-box {
+    background: var(--blue-light);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #185FA5;
+    line-height: 1.5;
+  }
+
+  .speedway-note {
+    background: var(--amber-light);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--amber);
+    line-height: 1.5;
+  }
+
+  .speedway-note strong { font-weight: 500; }
+
+  footer {
+    text-align: center;
+    padding: 32px 16px 0;
+    font-size: 12px;
+    color: var(--gray-400);
+    font-family: 'DM Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Hannah's budget</h1>
+    <div class="header-row">
+      <div class="period-label">biweekly planner</div>
+      <div class="saved-badge" id="saved-badge">✓ saved</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="paycheck-section">
+    <label>this paycheck from The Emery LLC</label>
+    <div class="paycheck-input-row">
+      <span>$</span>
+      <input type="number" id="paycheck-input" value="511" min="0" max="9999" step="1" inputmode="decimal">
+    </div>
+  </div>
+
+  <p class="section-title">planned spending</p>
+
+  <div class="categories-card">
+    <div class="col-headers">
+      <span>category</span>
+      <span>amount</span>
+      <span></span>
+    </div>
+    <div id="category-rows">
+    <div class="category-row">
+      <input class="row-name" type="text" value="gas (one fill-up)" placeholder="category name" oninput="updateName(0, this.value)">
+      <div class="row-amount-wrap">
+        <span>$</span>
+        <input class="row-amount" type="number" value="60" min="0" step="1" inputmode="decimal" oninput="updateAmount(0, this.value)">
+      </div>
+      <button class="row-delete" onclick="removeRow(0)" aria-label="remove">×</button>
+    </div>
+  
+    <div class="category-row">
+      <input class="row-name" type="text" value="speedway / convenience" placeholder="category name" oninput="updateName(1, this.value)">
+      <div class="row-amount-wrap">
+        <span>$</span>
+        <input class="row-amount" type="number" value="25" min="0" step="1" inputmode="decimal" oninput="updateAmount(1, this.value)">
+      </div>
+      <button class="row-delete" onclick="removeRow(1)" aria-label="remove">×</button>
+    </div>
+  
+    <div class="category-row">
+      <input class="row-name" type="text" value="groceries" placeholder="category name" oninput="updateName(2, this.value)">
+      <div class="row-amount-wrap">
+        <span>$</span>
+        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(2, this.value)">
+      </div>
+      <button class="row-delete" onclick="removeRow(2)" aria-label="remove">×</button>
+    </div>
+  
+    <div class="category-row">
+      <input class="row-name" type="text" value="dining out" placeholder="category name" oninput="updateName(3, this.value)">
+      <div class="row-amount-wrap">
+        <span>$</span>
+        <input class="row-amount" type="number" value="40" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
+      </div>
+      <button class="row-delete" onclick="removeRow(3)" aria-label="remove">×</button>
+    </div>
+  
+    <div class="category-row">
+      <input class="row-name" type="text" value="coffee &amp; treats" placeholder="category name" oninput="updateName(4, this.value)">
+      <div class="row-amount-wrap">
+        <span>$</span>
+        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(4, this.value)">
+      </div>
+      <button class="row-delete" onclick="removeRow(4)" aria-label="remove">×</button>
+    </div>
+  
+    <div class="category-row">
+      <input class="row-name" type="text" value="misc / personal" placeholder="category name" oninput="updateName(5, this.value)">
+      <div class="row-amount-wrap">
+        <span>$</span>
+        <input class="row-amount" type="number" value="20" min="0" step="1" inputmode="decimal" oninput="updateAmount(5, this.value)">
+      </div>
+      <button class="row-delete" onclick="removeRow(5)" aria-label="remove">×</button>
+    </div>
+  </div>
+    <button class="add-row-btn" onclick="addRow()">
+      <span class="add-icon">+</span>
+      add category
+    </button>
+  </div>
+
+  <button class="reset-btn" onclick="resetDefaults()">reset to defaults</button>
+
+  <p class="section-title" style="margin-top: 24px;">summary</p>
+
+  <div class="summary-card">
+    <div class="summary-row">
+      <span>paycheck</span>
+      <span class="val" id="s-paycheck">$533</span>
+    </div>
+    <div class="summary-row">
+      <span>planned spending</span>
+      <span class="val" id="s-spending">$145</span>
+    </div>
+    <div class="savings-row">
+      <div class="label">transfer to savings</div>
+      <div class="sublabel">send this on payday — before you spend anything</div>
+      <div class="savings-amount" id="s-savings">$388</div>
+      <div class="bar-wrap">
+        <div class="bar-track">
+          <div class="bar-spend" id="bar-spend" style="width: 27%;"></div>
+          <div class="bar-save" id="bar-save" style="width: 73%;"></div>
+        </div>
+        <div class="bar-labels">
+          <span id="bar-spend-pct">spending 27%</span>
+          <span id="bar-save-pct">savings 73%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-box" id="alert-box" style="display: none;">
+    ⚠ spending is $<span id="overage"></span> over your paycheck — reduce a category to avoid overdrawing.
+  </div>
+
+  <div class="tip-box" id="tip-box">🎉 Saving 73% this period — great work! Transfer $388 to savings the moment your paycheck hits.</div>
+
+  <div class="speedway-note">
+    <strong>Speedway reminder:</strong> only one of those transactions is actually gas (~$50). The rest are convenience store runs that were costing ~$130/period. Your cap here is your biggest savings lever.
+  </div>
+
+</div>
+
+<footer>
+  <p>zero-based budget — every dollar has a job</p>
+</footer>
+
+<script>
+const STORAGE_KEY = 'hannah_budget_v2';
+
+const defaultCategories = [
+  { name: "gas (one fill-up)", amount: 50 },
+  { name: "speedway / convenience", amount: 25 },
+  { name: "groceries", amount: 80 },
+  { name: "dining out", amount: 60 },
+  { name: "coffee & treats", amount: 20 },
+  { name: "misc / personal", amount: 20 },
+];
+
+let rows = [];
+let nextId = 0;
+let saveTimer = null;
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      document.getElementById('paycheck-input').value = data.paycheck || 511;
+      rows = (data.rows || []).map((r, i) => ({ id: i, name: r.name, amount: r.amount }));
+      nextId = rows.length;
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+function saveToStorage() {
+  try {
+    const data = {
+      paycheck: parseFloat(document.getElementById('paycheck-input').value) || 511,
+      rows: rows.map(r => ({ name: r.name, amount: r.amount })),
+      savedAt: new Date().toISOString()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    flashSaved();
+  } catch(e) {}
+}
+
+function flashSaved() {
+  const badge = document.getElementById('saved-badge');
+  badge.classList.add('show');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => badge.classList.remove('show'), 2000);
+}
+
+function debouncedSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveToStorage, 600);
+}
+
+function resetDefaults() {
+  if (!confirm('Reset all categories to defaults? Your current changes will be lost.')) return;
+  rows = defaultCategories.map((d, i) => ({ id: i, name: d.name, amount: d.amount }));
+  nextId = rows.length;
+  document.getElementById('paycheck-input').value = 511;
+  render();
+  update();
+  saveToStorage();
+}
+
+function addRow() {
+  rows.push({ id: nextId++, name: '', amount: 0 });
+  render();
+  update();
+  const inputs = document.querySelectorAll('.row-name');
+  inputs[inputs.length - 1].focus();
+}
+
+function removeRow(id) {
+  rows = rows.filter(r => r.id !== id);
+  render();
+  update();
+  debouncedSave();
+}
+
+function render() {
+  const container = document.getElementById('category-rows');
+  container.innerHTML = rows.map(r => `
+    <div class="category-row">
+      <input class="row-name" type="text" value="${escHtml(r.name)}" placeholder="category name"
+        oninput="updateName(${r.id}, this.value)" />
+      <div class="row-amount-wrap">
+        <span>$</span>
+        <input class="row-amount" type="number" value="${r.amount}" min="0" step="1" inputmode="decimal"
+          oninput="updateAmount(${r.id}, this.value)" />
+      </div>
+      <button class="row-delete" onclick="removeRow(${r.id})" aria-label="remove">×</button>
+    </div>
+  `).join('');
+}
+
+function escHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function updateName(id, val) {
+  const r = rows.find(r => r.id === id);
+  if (r) { r.name = val; debouncedSave(); }
+}
+
+function updateAmount(id, val) {
+  const r = rows.find(r => r.id === id);
+  if (r) { r.amount = parseFloat(val) || 0; update(); debouncedSave(); }
+}
+
+function getPaycheck() {
+  return parseFloat(document.getElementById('paycheck-input').value) || 0;
+}
+
+function getTotal() {
+  return rows.reduce((s, r) => s + (r.amount || 0), 0);
+}
+
+function update() {
+  const pay = getPaycheck();
+  const spent = getTotal();
+  const savings = pay - spent;
+
+  document.getElementById('s-paycheck').textContent = '$' + pay.toFixed(0);
+  document.getElementById('s-spending').textContent = '$' + spent.toFixed(0);
+
+  const savEl = document.getElementById('s-savings');
+  savEl.textContent = savings >= 0 ? '$' + savings.toFixed(0) : '-$' + Math.abs(savings).toFixed(0);
+  savEl.className = 'savings-amount' + (savings < 0 ? ' negative' : '');
+
+  const spendPct = pay > 0 ? Math.min(100, Math.round((spent / pay) * 100)) : 0;
+  const savePct = Math.max(0, 100 - spendPct);
+  document.getElementById('bar-spend').style.width = spendPct + '%';
+  document.getElementById('bar-save').style.width = savePct + '%';
+  document.getElementById('bar-spend-pct').textContent = 'spending ' + spendPct + '%';
+  document.getElementById('bar-save-pct').textContent = 'savings ' + savePct + '%';
+
+  const alertBox = document.getElementById('alert-box');
+  if (savings < 0) {
+    alertBox.style.display = 'block';
+    document.getElementById('overage').textContent = Math.abs(savings).toFixed(0);
+  } else {
+    alertBox.style.display = 'none';
+  }
+
+  const tip = document.getElementById('tip-box');
+  const pct = pay > 0 ? (savings / pay) * 100 : 0;
+  if (savings < 0) {
+    tip.textContent = 'Trim a category until savings is $0 or more.';
+  } else if (pct >= 25) {
+    tip.textContent = '🎉 Saving ' + Math.round(pct) + '% this period — great work! Transfer $' + savings.toFixed(0) + ' to savings the moment your paycheck hits.';
+  } else if (pct >= 10) {
+    tip.textContent = 'Saving ' + Math.round(pct) + '% this period. Transfer $' + savings.toFixed(0) + ' to savings on payday before you spend anything.';
+  } else if (pct > 0) {
+    tip.textContent = 'Saving ' + Math.round(pct) + '% — a small start. Transfer $' + savings.toFixed(0) + ' to savings on payday. Try nudging dining or convenience down a little.';
+  } else {
+    tip.textContent = 'Nothing left to save this period. Try reducing one category by $10–15 to build even a small cushion.';
+  }
+}
+
+// Init
+if (!loadFromStorage()) {
+  rows = defaultCategories.map((d, i) => ({ id: i, name: d.name, amount: d.amount }));
+  nextId = rows.length;
+}
+
+render();
+update();
+
+document.getElementById('paycheck-input').addEventListener('input', () => { update(); debouncedSave(); });
+</script>
+
+
+</body></html>
