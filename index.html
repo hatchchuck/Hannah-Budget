@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///C:/Users/hatch/Downloads/hannah_index_3.html -->
+<!-- saved from url=(0043)https://hatchchuck.github.io/Hannah-Budget/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -443,7 +443,7 @@
       <input class="row-name" type="text" value="gas (one fill-up)" placeholder="category name" oninput="updateName(0, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="60" min="0" step="1" inputmode="decimal" oninput="updateAmount(0, this.value)">
+        <input class="row-amount" type="number" value="1000" min="0" step="1" inputmode="decimal" oninput="updateAmount(0, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(0)" aria-label="remove">×</button>
     </div>
@@ -461,7 +461,7 @@
       <input class="row-name" type="text" value="groceries" placeholder="category name" oninput="updateName(2, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(2, this.value)">
+        <input class="row-amount" type="number" value="80" min="0" step="1" inputmode="decimal" oninput="updateAmount(2, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(2)" aria-label="remove">×</button>
     </div>
@@ -470,7 +470,7 @@
       <input class="row-name" type="text" value="dining out" placeholder="category name" oninput="updateName(3, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="40" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
+        <input class="row-amount" type="number" value="60" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(3)" aria-label="remove">×</button>
     </div>
@@ -479,7 +479,7 @@
       <input class="row-name" type="text" value="coffee &amp; treats" placeholder="category name" oninput="updateName(4, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(4, this.value)">
+        <input class="row-amount" type="number" value="20" min="0" step="1" inputmode="decimal" oninput="updateAmount(4, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(4)" aria-label="remove">×</button>
     </div>
@@ -506,34 +506,34 @@
   <div class="summary-card">
     <div class="summary-row">
       <span>paycheck</span>
-      <span class="val" id="s-paycheck">$533</span>
+      <span class="val" id="s-paycheck">$511</span>
     </div>
     <div class="summary-row">
       <span>planned spending</span>
-      <span class="val" id="s-spending">$145</span>
+      <span class="val" id="s-spending">$1205</span>
     </div>
     <div class="savings-row">
       <div class="label">transfer to savings</div>
       <div class="sublabel">send this on payday — before you spend anything</div>
-      <div class="savings-amount" id="s-savings">$388</div>
+      <div class="savings-amount negative" id="s-savings">-$694</div>
       <div class="bar-wrap">
         <div class="bar-track">
-          <div class="bar-spend" id="bar-spend" style="width: 27%;"></div>
-          <div class="bar-save" id="bar-save" style="width: 73%;"></div>
+          <div class="bar-spend" id="bar-spend" style="width: 100%;"></div>
+          <div class="bar-save" id="bar-save" style="width: 0%;"></div>
         </div>
         <div class="bar-labels">
-          <span id="bar-spend-pct">spending 27%</span>
-          <span id="bar-save-pct">savings 73%</span>
+          <span id="bar-spend-pct">spending 100%</span>
+          <span id="bar-save-pct">savings 0%</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="alert-box" id="alert-box" style="display: none;">
-    ⚠ spending is $<span id="overage"></span> over your paycheck — reduce a category to avoid overdrawing.
+  <div class="alert-box" id="alert-box" style="display: block;">
+    ⚠ spending is $<span id="overage">694</span> over your paycheck — reduce a category to avoid overdrawing.
   </div>
 
-  <div class="tip-box" id="tip-box">🎉 Saving 73% this period — great work! Transfer $388 to savings the moment your paycheck hits.</div>
+  <div class="tip-box" id="tip-box">Trim a category until savings is $0 or more.</div>
 
   <div class="speedway-note">
     <strong>Speedway reminder:</strong> only one of those transactions is actually gas (~$50). The rest are convenience store runs that were costing ~$130/period. Your cap here is your biggest savings lever.
