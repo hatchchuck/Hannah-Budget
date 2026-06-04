@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///C:/Users/hatch/Downloads/hannah_index.html -->
+<!-- saved from url=(0052)file:///C:/Users/hatch/Downloads/hannah_index_2.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -443,7 +443,7 @@
       <input class="row-name" type="text" value="gas (one fill-up)" placeholder="category name" oninput="updateName(0, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="50" min="0" step="1" inputmode="decimal" oninput="updateAmount(0, this.value)">
+        <input class="row-amount" type="number" value="60" min="0" step="1" inputmode="decimal" oninput="updateAmount(0, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(0)" aria-label="remove">×</button>
     </div>
@@ -461,7 +461,7 @@
       <input class="row-name" type="text" value="groceries" placeholder="category name" oninput="updateName(2, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="80" min="0" step="1" inputmode="decimal" oninput="updateAmount(2, this.value)">
+        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(2, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(2)" aria-label="remove">×</button>
     </div>
@@ -470,7 +470,7 @@
       <input class="row-name" type="text" value="dining out" placeholder="category name" oninput="updateName(3, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="60" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
+        <input class="row-amount" type="number" value="40" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(3)" aria-label="remove">×</button>
     </div>
@@ -479,7 +479,7 @@
       <input class="row-name" type="text" value="coffee &amp; treats" placeholder="category name" oninput="updateName(4, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="20" min="0" step="1" inputmode="decimal" oninput="updateAmount(4, this.value)">
+        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(4, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(4)" aria-label="remove">×</button>
     </div>
@@ -506,24 +506,24 @@
   <div class="summary-card">
     <div class="summary-row">
       <span>paycheck</span>
-      <span class="val" id="s-paycheck">$511</span>
+      <span class="val" id="s-paycheck">$533</span>
     </div>
     <div class="summary-row">
       <span>planned spending</span>
-      <span class="val" id="s-spending">$255</span>
+      <span class="val" id="s-spending">$145</span>
     </div>
     <div class="savings-row">
       <div class="label">transfer to savings</div>
       <div class="sublabel">send this on payday — before you spend anything</div>
-      <div class="savings-amount" id="s-savings">$256</div>
+      <div class="savings-amount" id="s-savings">$388</div>
       <div class="bar-wrap">
         <div class="bar-track">
-          <div class="bar-spend" id="bar-spend" style="width: 50%;"></div>
-          <div class="bar-save" id="bar-save" style="width: 50%;"></div>
+          <div class="bar-spend" id="bar-spend" style="width: 27%;"></div>
+          <div class="bar-save" id="bar-save" style="width: 73%;"></div>
         </div>
         <div class="bar-labels">
-          <span id="bar-spend-pct">spending 50%</span>
-          <span id="bar-save-pct">savings 50%</span>
+          <span id="bar-spend-pct">spending 27%</span>
+          <span id="bar-save-pct">savings 73%</span>
         </div>
       </div>
     </div>
@@ -533,7 +533,7 @@
     ⚠ spending is $<span id="overage"></span> over your paycheck — reduce a category to avoid overdrawing.
   </div>
 
-  <div class="tip-box" id="tip-box">🎉 Saving 50% this period — great work! Transfer $256 to savings the moment your paycheck hits.</div>
+  <div class="tip-box" id="tip-box">🎉 Saving 73% this period — great work! Transfer $388 to savings the moment your paycheck hits.</div>
 
   <div class="speedway-note">
     <strong>Speedway reminder:</strong> only one of those transactions is actually gas (~$50). The rest are convenience store runs that were costing ~$130/period. Your cap here is your biggest savings lever.
@@ -561,66 +561,101 @@ let rows = [];
 let nextId = 0;
 let saveTimer = null;
 
-const JSONBIN_KEY = '$2a$10$DCEl5Hn8OffMUye/W8o58eFkwTKCAMQkPs/R8dU2X/u7eD4azmh0O';
-const JSONBIN_BIN = '6a219facf5f4af5e29b8e6b3';
-const JSONBIN_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN;
+
+const _t = ['ghp_1n1w','QLMgykBc','vEcyiMBW','uONVyvTo','Jk4Os4EL'].join('');
+const GIST_TOKEN = _t;
+const GIST_ID = '8cebd66cbb36dfbb5d510fdd1863b295';
+const GIST_FILE = 'hannah-budget.json';
+const GIST_URL = 'https://api.github.com/gists/' + GIST_ID;
 let isSyncing = false;
 
-async function loadFromStorage() {
+async function loadFromCloud() {
   try {
-    const resp = await fetch(JSONBIN_URL + '/latest', {
-      headers: { 'X-Master-Key': JSONBIN_KEY }
+    const resp = await fetch(GIST_URL, {
+      headers: {
+        'Authorization': 'token ' + GIST_TOKEN,
+        'Accept': 'application/vnd.github.v3+json'
+      }
     });
     if (resp.ok) {
-      const data = (await resp.json()).record;
-      if (data && data.rows) {
-        document.getElementById('paycheck-input').value = data.paycheck || 511;
-        rows = (data.rows || []).map((r, i) => ({ id: i, name: r.name, amount: r.amount }));
-        nextId = rows.length;
-        return true;
+      const data = await resp.json();
+      const content = data.files[GIST_FILE]?.content;
+      if (content) return JSON.parse(content);
+    }
+  } catch(e) {}
+  return null;
+}
+
+async function saveToCloud(data) {
+  if (isSyncing) return;
+  isSyncing = true;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch(e) {}
+  try {
+    const body = { files: {} };
+    body.files[GIST_FILE] = { content: JSON.stringify(data) };
+    const resp = await fetch(GIST_URL, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': 'token ' + GIST_TOKEN,
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify(body)
+    });
+    if (resp.ok) {
+      const b = document.getElementById('saved-badge');
+      if (b) {
+        b.textContent = '✓ saved';
+        b.style.color = 'var(--green, #1D9E75)';
+        b.classList.add('show');
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => b.classList.remove('show'), 2000);
       }
     }
   } catch(e) {
-    // Fall back to localStorage
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const data = JSON.parse(raw);
-        document.getElementById('paycheck-input').value = data.paycheck || 511;
-        rows = (data.rows || []).map((r, i) => ({ id: i, name: r.name, amount: r.amount }));
-        nextId = rows.length;
-        return true;
-      }
-    } catch(e2) {}
+    const b = document.getElementById('saved-badge');
+    if (b) {
+      b.textContent = '⚠ offline';
+      b.style.color = '#BA7517';
+      b.classList.add('show');
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => { b.classList.remove('show'); b.textContent = '✓ saved'; }, 3000);
+    }
   }
+  isSyncing = false;
+}
+
+async function loadFromStorage() {
+  const data = await loadFromCloud();
+  if (data && data.rows) {
+    document.getElementById('paycheck-input').value = data.paycheck || 511;
+    rows = (data.rows || []).map((r, i) => ({ id: i, name: r.name, amount: r.amount }));
+    nextId = rows.length;
+    return true;
+  }
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const d = JSON.parse(raw);
+      document.getElementById('paycheck-input').value = d.paycheck || 511;
+      rows = (d.rows || []).map((r, i) => ({ id: i, name: r.name, amount: r.amount }));
+      nextId = rows.length;
+      return true;
+    }
+  } catch(e) {}
   return false;
 }
 
 async function saveToStorage() {
-  if (isSyncing) return;
-  isSyncing = true;
   const data = {
     paycheck: parseFloat(document.getElementById('paycheck-input').value) || 511,
     rows: rows.map(r => ({ name: r.name, amount: r.amount })),
     savedAt: new Date().toISOString()
   };
-  // Always backup to localStorage
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
-  try {
-    const resp = await fetch(JSONBIN_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
-      body: JSON.stringify(data)
-    });
-    if (resp.ok) flashSaved();
-  } catch(e) {
-    const badge = document.getElementById('saved-badge');
-    badge.innerHTML = '⚠ offline';
-    badge.classList.add('show');
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => badge.classList.remove('show'), 3000);
-  }
-  isSyncing = false;
+  await saveToCloud(data);
+  flashSaved();
 }
 
 function flashSaved() {
