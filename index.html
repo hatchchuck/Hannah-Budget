@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)https://hatchchuck.github.io/Hannah-Budget/ -->
+<!-- saved from url=(0046)file:///C:/Users/hatch/Downloads/index_20.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,7 +84,8 @@
     padding: 0 16px;
   }
 
-  .paycheck-section {
+  /* ── Balance card ── */
+  .balance-section {
     background: white;
     margin: 20px 0 0;
     border-radius: var(--radius);
@@ -92,7 +93,7 @@
     padding: 20px;
   }
 
-  .paycheck-section label {
+  .balance-section label {
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -103,19 +104,19 @@
     margin-bottom: 10px;
   }
 
-  .paycheck-input-row {
+  .balance-input-row {
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
-  .paycheck-input-row span {
+  .balance-input-row .dollar {
     font-size: 28px;
     font-weight: 300;
     color: var(--gray-400);
   }
 
-  #paycheck-input {
+  #balance-input {
     font-family: 'DM Mono', monospace;
     font-size: 36px;
     font-weight: 500;
@@ -127,9 +128,104 @@
     -moz-appearance: textfield;
   }
 
+  #balance-input::-webkit-outer-spin-button,
+  #balance-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  .balance-breakdown {
+    margin-top: 12px;
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--gray-400);
+    flex-wrap: wrap;
+  }
+
+  .breakdown-chip {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .breakdown-chip.carryover {
+    color: var(--green-dark);
+    border-color: var(--green-light);
+    background: var(--green-light);
+  }
+
+  .breakdown-chip.zero {
+    color: var(--gray-400);
+  }
+
+  /* hidden paycheck field — stored but not shown prominently */
+  .paycheck-sub {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .paycheck-sub label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 0;
+  }
+
+  .paycheck-sub-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .paycheck-sub-input-wrap span {
+    font-size: 15px;
+    color: var(--gray-400);
+    font-family: 'DM Mono', monospace;
+  }
+
+  #paycheck-input {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--gray-600);
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: right;
+    width: 72px;
+    -moz-appearance: textfield;
+  }
+
   #paycheck-input::-webkit-outer-spin-button,
   #paycheck-input::-webkit-inner-spin-button { -webkit-appearance: none; }
 
+  #other-income-input {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--gray-600);
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: right;
+    width: 72px;
+    -moz-appearance: textfield;
+  }
+
+  #other-income-input::-webkit-outer-spin-button,
+  #other-income-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  /* ── Categories ── */
   .section-title {
     font-size: 11px;
     font-weight: 500;
@@ -278,6 +374,7 @@
 
   .reset-btn:hover { color: var(--red); }
 
+  /* ── Summary ── */
   .summary-card {
     background: white;
     border-radius: var(--radius);
@@ -301,6 +398,10 @@
     font-weight: 500;
     color: var(--gray-900);
   }
+
+  .summary-row.carryover-row { display: none; }
+  .summary-row.carryover-row.visible { display: flex; }
+  .summary-row.carryover-row .val { color: var(--green-dark); }
 
   .savings-row {
     background: var(--green-light);
@@ -422,11 +523,31 @@
 
 <div class="container">
 
-  <div class="paycheck-section">
-    <label>this paycheck from The Emery LLC</label>
-    <div class="paycheck-input-row">
-      <span>$</span>
-      <input type="number" id="paycheck-input" value="511" min="0" max="9999" step="1" inputmode="decimal">
+  <div class="balance-section">
+    <label>account balance on payday (Emery deposit included)</label>
+    <div class="balance-input-row">
+      <span class="dollar">$</span>
+      <input type="number" id="balance-input" value="511" min="0" max="99999" step="1" inputmode="decimal">
+    </div>
+    <div class="balance-breakdown">
+      <span>Emery $<span id="chip-paycheck">533</span></span>
+      <span class="breakdown-chip zero" id="chip-other" style="display:none">+ $0 other</span>
+      <span>+</span>
+      <span class="breakdown-chip zero" id="chip-carryover">$0 leftover</span>
+    </div>
+    <div class="paycheck-sub">
+      <label>Emery paycheck amount</label>
+      <div class="paycheck-sub-input-wrap">
+        <span>$</span>
+        <input type="number" id="paycheck-input" value="511" min="0" max="9999" step="1" inputmode="decimal">
+      </div>
+    </div>
+    <div class="paycheck-sub">
+      <label>other income (gifts, tips, etc.)</label>
+      <div class="paycheck-sub-input-wrap">
+        <span>$</span>
+        <input type="number" id="other-income-input" value="0" min="0" max="9999" step="1" inputmode="decimal">
+      </div>
     </div>
   </div>
 
@@ -443,7 +564,7 @@
       <input class="row-name" type="text" value="gas (one fill-up)" placeholder="category name" oninput="updateName(0, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="1000" min="0" step="1" inputmode="decimal" oninput="updateAmount(0, this.value)">
+        <input class="row-amount" type="number" value="60" min="0" step="1" inputmode="decimal" oninput="updateAmount(0, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(0)" aria-label="remove">×</button>
     </div>
@@ -461,7 +582,7 @@
       <input class="row-name" type="text" value="groceries" placeholder="category name" oninput="updateName(2, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="80" min="0" step="1" inputmode="decimal" oninput="updateAmount(2, this.value)">
+        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(2, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(2)" aria-label="remove">×</button>
     </div>
@@ -470,7 +591,7 @@
       <input class="row-name" type="text" value="dining out" placeholder="category name" oninput="updateName(3, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="60" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
+        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(3)" aria-label="remove">×</button>
     </div>
@@ -505,35 +626,43 @@
 
   <div class="summary-card">
     <div class="summary-row">
-      <span>paycheck</span>
-      <span class="val" id="s-paycheck">$511</span>
+      <span>account balance</span>
+      <span class="val" id="s-balance">$533</span>
+    </div>
+    <div class="summary-row carryover-row" id="other-income-row">
+      <span>&nbsp;&nbsp;↳ other income</span>
+      <span class="val" id="s-other-income">$0</span>
+    </div>
+    <div class="summary-row carryover-row" id="carryover-row">
+      <span>&nbsp;&nbsp;↳ leftover from last period</span>
+      <span class="val" id="s-carryover">$0</span>
     </div>
     <div class="summary-row">
       <span>planned spending</span>
-      <span class="val" id="s-spending">$1205</span>
+      <span class="val" id="s-spending">$125</span>
     </div>
     <div class="savings-row">
       <div class="label">transfer to savings</div>
       <div class="sublabel">send this on payday — before you spend anything</div>
-      <div class="savings-amount negative" id="s-savings">-$694</div>
+      <div class="savings-amount" id="s-savings">$408</div>
       <div class="bar-wrap">
         <div class="bar-track">
-          <div class="bar-spend" id="bar-spend" style="width: 100%;"></div>
-          <div class="bar-save" id="bar-save" style="width: 0%;"></div>
+          <div class="bar-spend" id="bar-spend" style="width: 23%;"></div>
+          <div class="bar-save" id="bar-save" style="width: 77%;"></div>
         </div>
         <div class="bar-labels">
-          <span id="bar-spend-pct">spending 100%</span>
-          <span id="bar-save-pct">savings 0%</span>
+          <span id="bar-spend-pct">spending 23%</span>
+          <span id="bar-save-pct">savings 77%</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="alert-box" id="alert-box" style="display: block;">
-    ⚠ spending is $<span id="overage">694</span> over your paycheck — reduce a category to avoid overdrawing.
+  <div class="alert-box" id="alert-box" style="display: none;">
+    ⚠ spending is $<span id="overage">0</span> over your account balance — reduce a category to avoid overdrawing.
   </div>
 
-  <div class="tip-box" id="tip-box">Trim a category until savings is $0 or more.</div>
+  <div class="tip-box" id="tip-box">🎉 Saving 77% this period — great work! Transfer $408 to savings right now before you spend anything.</div>
 
   <div class="speedway-note">
     <strong>Speedway reminder:</strong> only one of those transactions is actually gas (~$50). The rest are convenience store runs that were costing ~$130/period. Your cap here is your biggest savings lever.
@@ -560,7 +689,6 @@ const defaultCategories = [
 let rows = [];
 let nextId = 0;
 let saveTimer = null;
-
 
 const _t = ['ghp_1n1w','QLMgykBc','vEcyiMBW','uONVyvTo','Jk4Os4EL'].join('');
 const GIST_TOKEN = _t;
@@ -589,9 +717,7 @@ async function loadFromCloud() {
 async function saveToCloud(data) {
   if (isSyncing) return;
   isSyncing = true;
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch(e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
   try {
     const body = { files: {} };
     body.files[GIST_FILE] = { content: JSON.stringify(data) };
@@ -604,65 +730,60 @@ async function saveToCloud(data) {
       },
       body: JSON.stringify(body)
     });
-    if (resp.ok) {
-      const b = document.getElementById('saved-badge');
-      if (b) {
-        b.textContent = '✓ saved';
-        b.style.color = 'var(--green, #1D9E75)';
-        b.classList.add('show');
-        clearTimeout(saveTimer);
-        saveTimer = setTimeout(() => b.classList.remove('show'), 2000);
-      }
-    }
+    if (resp.ok) showBadge('✓ saved', 'var(--green, #1D9E75)', 2000);
   } catch(e) {
-    const b = document.getElementById('saved-badge');
-    if (b) {
-      b.textContent = '⚠ offline';
-      b.style.color = '#BA7517';
-      b.classList.add('show');
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(() => { b.classList.remove('show'); b.textContent = '✓ saved'; }, 3000);
-    }
+    showBadge('⚠ offline', '#BA7517', 3000);
   }
   isSyncing = false;
 }
 
+function showBadge(text, color, duration) {
+  const b = document.getElementById('saved-badge');
+  if (!b) return;
+  b.textContent = text;
+  b.style.color = color;
+  b.classList.add('show');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { b.classList.remove('show'); b.textContent = '✓ saved'; }, duration);
+}
+
 async function loadFromStorage() {
   const data = await loadFromCloud();
-  if (data && data.rows) {
-    document.getElementById('paycheck-input').value = data.paycheck || 511;
-    rows = (data.rows || []).map((r, i) => ({ id: i, name: r.name, amount: r.amount }));
-    nextId = rows.length;
-    return true;
+  const src = data && data.rows ? data : null;
+  if (!src) {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const d = JSON.parse(raw);
+        if (d && d.rows) {
+          applyData(d);
+          return true;
+        }
+      }
+    } catch(e) {}
+    return false;
   }
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const d = JSON.parse(raw);
-      document.getElementById('paycheck-input').value = d.paycheck || 511;
-      rows = (d.rows || []).map((r, i) => ({ id: i, name: r.name, amount: r.amount }));
-      nextId = rows.length;
-      return true;
-    }
-  } catch(e) {}
-  return false;
+  applyData(src);
+  return true;
+}
+
+function applyData(d) {
+  document.getElementById('balance-input').value = d.balance != null ? d.balance : (d.paycheck || 511);
+  document.getElementById('paycheck-input').value = d.paycheck || 511;
+  document.getElementById('other-income-input').value = d.otherIncome || 0;
+  rows = (d.rows || []).map((r, i) => ({ id: i, name: r.name, amount: r.amount }));
+  nextId = rows.length;
 }
 
 async function saveToStorage() {
   const data = {
+    balance: parseFloat(document.getElementById('balance-input').value) || 0,
     paycheck: parseFloat(document.getElementById('paycheck-input').value) || 511,
+    otherIncome: parseFloat(document.getElementById('other-income-input').value) || 0,
     rows: rows.map(r => ({ name: r.name, amount: r.amount })),
     savedAt: new Date().toISOString()
   };
   await saveToCloud(data);
-  flashSaved();
-}
-
-function flashSaved() {
-  const badge = document.getElementById('saved-badge');
-  badge.classList.add('show');
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => badge.classList.remove('show'), 2000);
 }
 
 function debouncedSave() {
@@ -674,7 +795,9 @@ function resetDefaults() {
   if (!confirm('Reset all categories to defaults? Your current changes will be lost.')) return;
   rows = defaultCategories.map((d, i) => ({ id: i, name: d.name, amount: d.amount }));
   nextId = rows.length;
+  document.getElementById('balance-input').value = 511;
   document.getElementById('paycheck-input').value = 511;
+  document.getElementById('other-income-input').value = 0;
   render();
   update();
   saveToStorage();
@@ -725,8 +848,16 @@ function updateAmount(id, val) {
   if (r) { r.amount = parseFloat(val) || 0; update(); debouncedSave(); }
 }
 
+function getBalance() {
+  return parseFloat(document.getElementById('balance-input').value) || 0;
+}
+
 function getPaycheck() {
   return parseFloat(document.getElementById('paycheck-input').value) || 0;
+}
+
+function getOtherIncome() {
+  return parseFloat(document.getElementById('other-income-input').value) || 0;
 }
 
 function getTotal() {
@@ -734,23 +865,68 @@ function getTotal() {
 }
 
 function update() {
-  const pay = getPaycheck();
-  const spent = getTotal();
-  const savings = pay - spent;
+  const balance     = getBalance();
+  const paycheck    = getPaycheck();
+  const otherIncome = getOtherIncome();
+  const leftover    = Math.max(0, balance - paycheck - otherIncome);
+  const spent       = getTotal();
+  const savings     = balance - spent;
 
-  document.getElementById('s-paycheck').textContent = '$' + pay.toFixed(0);
+  // Breakdown chips under the balance field
+  document.getElementById('chip-paycheck').textContent = paycheck.toFixed(0);
+
+  const chipOther = document.getElementById('chip-other');
+  if (otherIncome > 0) {
+    chipOther.textContent = '+ $' + otherIncome.toFixed(0) + ' other';
+    chipOther.style.display = '';
+    chipOther.classList.remove('zero');
+    chipOther.classList.add('carryover');
+  } else {
+    chipOther.style.display = 'none';
+  }
+
+  const chip = document.getElementById('chip-carryover');
+  if (leftover > 0) {
+    chip.textContent = '$' + leftover.toFixed(0) + ' leftover';
+    chip.classList.remove('zero');
+    chip.classList.add('carryover');
+  } else {
+    chip.textContent = '$0 leftover';
+    chip.classList.remove('carryover');
+    chip.classList.add('zero');
+  }
+
+  // Summary card
+  document.getElementById('s-balance').textContent = '$' + balance.toFixed(0);
+
+  const otherIncomeRow = document.getElementById('other-income-row');
+  if (otherIncome > 0) {
+    otherIncomeRow.classList.add('visible');
+    document.getElementById('s-other-income').textContent = '$' + otherIncome.toFixed(0);
+  } else {
+    otherIncomeRow.classList.remove('visible');
+  }
+
+  const carryoverRow = document.getElementById('carryover-row');
+  if (leftover > 0) {
+    carryoverRow.classList.add('visible');
+    document.getElementById('s-carryover').textContent = '$' + leftover.toFixed(0);
+  } else {
+    carryoverRow.classList.remove('visible');
+  }
+
   document.getElementById('s-spending').textContent = '$' + spent.toFixed(0);
 
   const savEl = document.getElementById('s-savings');
   savEl.textContent = savings >= 0 ? '$' + savings.toFixed(0) : '-$' + Math.abs(savings).toFixed(0);
   savEl.className = 'savings-amount' + (savings < 0 ? ' negative' : '');
 
-  const spendPct = pay > 0 ? Math.min(100, Math.round((spent / pay) * 100)) : 0;
-  const savePct = Math.max(0, 100 - spendPct);
+  const spendPct = balance > 0 ? Math.min(100, Math.round((spent / balance) * 100)) : 0;
+  const savePct  = Math.max(0, 100 - spendPct);
   document.getElementById('bar-spend').style.width = spendPct + '%';
-  document.getElementById('bar-save').style.width = savePct + '%';
+  document.getElementById('bar-save').style.width  = savePct  + '%';
   document.getElementById('bar-spend-pct').textContent = 'spending ' + spendPct + '%';
-  document.getElementById('bar-save-pct').textContent = 'savings ' + savePct + '%';
+  document.getElementById('bar-save-pct').textContent  = 'savings '  + savePct  + '%';
 
   const alertBox = document.getElementById('alert-box');
   if (savings < 0) {
@@ -761,11 +937,11 @@ function update() {
   }
 
   const tip = document.getElementById('tip-box');
-  const pct = pay > 0 ? (savings / pay) * 100 : 0;
+  const pct = balance > 0 ? (savings / balance) * 100 : 0;
   if (savings < 0) {
     tip.textContent = 'Trim a category until savings is $0 or more.';
   } else if (pct >= 25) {
-    tip.textContent = '🎉 Saving ' + Math.round(pct) + '% this period — great work! Transfer $' + savings.toFixed(0) + ' to savings the moment your paycheck hits.';
+    tip.textContent = '🎉 Saving ' + Math.round(pct) + '% this period — great work! Transfer $' + savings.toFixed(0) + ' to savings right now before you spend anything.';
   } else if (pct >= 10) {
     tip.textContent = 'Saving ' + Math.round(pct) + '% this period. Transfer $' + savings.toFixed(0) + ' to savings on payday before you spend anything.';
   } else if (pct > 0) {
@@ -775,7 +951,7 @@ function update() {
   }
 }
 
-// Init — load from JSONBin then render
+// Init
 loadFromStorage().then(loaded => {
   if (!loaded) {
     rows = defaultCategories.map((d, i) => ({ id: i, name: d.name, amount: d.amount }));
@@ -790,7 +966,9 @@ loadFromStorage().then(loaded => {
   update();
 });
 
-document.getElementById('paycheck-input').addEventListener('input', () => { update(); debouncedSave(); });
+document.getElementById('balance-input').addEventListener('input',       () => { update(); debouncedSave(); });
+document.getElementById('paycheck-input').addEventListener('input',      () => { update(); debouncedSave(); });
+document.getElementById('other-income-input').addEventListener('input',  () => { update(); debouncedSave(); });
 </script>
 
 
