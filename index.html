@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/hatch/Downloads/index_20.html -->
+<!-- saved from url=(0050)file:///C:/Users/hatch/Downloads/hannah-index.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -530,8 +530,8 @@
       <input type="number" id="balance-input" value="511" min="0" max="99999" step="1" inputmode="decimal">
     </div>
     <div class="balance-breakdown">
-      <span>Emery $<span id="chip-paycheck">533</span></span>
-      <span class="breakdown-chip zero" id="chip-other" style="display:none">+ $0 other</span>
+      <span>Emery $<span id="chip-paycheck">538</span></span>
+      <span class="breakdown-chip carryover" id="chip-other" style="">+ $50 other</span>
       <span>+</span>
       <span class="breakdown-chip zero" id="chip-carryover">$0 leftover</span>
     </div>
@@ -573,7 +573,7 @@
       <input class="row-name" type="text" value="speedway / convenience" placeholder="category name" oninput="updateName(1, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="25" min="0" step="1" inputmode="decimal" oninput="updateAmount(1, this.value)">
+        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(1, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(1)" aria-label="remove">×</button>
     </div>
@@ -588,30 +588,39 @@
     </div>
   
     <div class="category-row">
-      <input class="row-name" type="text" value="dining out" placeholder="category name" oninput="updateName(3, this.value)">
+      <input class="row-name" type="text" value="coffee &amp; treats" placeholder="category name" oninput="updateName(3, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
+        <input class="row-amount" type="number" value="10" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(3)" aria-label="remove">×</button>
     </div>
   
     <div class="category-row">
-      <input class="row-name" type="text" value="coffee &amp; treats" placeholder="category name" oninput="updateName(4, this.value)">
+      <input class="row-name" type="text" value="misc / personal" placeholder="category name" oninput="updateName(4, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="20" min="0" step="1" inputmode="decimal" oninput="updateAmount(4, this.value)">
+        <input class="row-amount" type="number" value="15" min="0" step="1" inputmode="decimal" oninput="updateAmount(4, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(4)" aria-label="remove">×</button>
     </div>
   
     <div class="category-row">
-      <input class="row-name" type="text" value="misc / personal" placeholder="category name" oninput="updateName(5, this.value)">
+      <input class="row-name" type="text" value="dining out " placeholder="category name" oninput="updateName(5, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="20" min="0" step="1" inputmode="decimal" oninput="updateAmount(5, this.value)">
+        <input class="row-amount" type="number" value="50" min="0" step="1" inputmode="decimal" oninput="updateAmount(5, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(5)" aria-label="remove">×</button>
+    </div>
+  
+    <div class="category-row">
+      <input class="row-name" type="text" value="marykay" placeholder="category name" oninput="updateName(6, this.value)">
+      <div class="row-amount-wrap">
+        <span>$</span>
+        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(6, this.value)">
+      </div>
+      <button class="row-delete" onclick="removeRow(6)" aria-label="remove">×</button>
     </div>
   </div>
     <button class="add-row-btn" onclick="addRow()">
@@ -627,11 +636,11 @@
   <div class="summary-card">
     <div class="summary-row">
       <span>account balance</span>
-      <span class="val" id="s-balance">$533</span>
+      <span class="val" id="s-balance">$554</span>
     </div>
-    <div class="summary-row carryover-row" id="other-income-row">
+    <div class="summary-row carryover-row visible" id="other-income-row">
       <span>&nbsp;&nbsp;↳ other income</span>
-      <span class="val" id="s-other-income">$0</span>
+      <span class="val" id="s-other-income">$50</span>
     </div>
     <div class="summary-row carryover-row" id="carryover-row">
       <span>&nbsp;&nbsp;↳ leftover from last period</span>
@@ -639,20 +648,20 @@
     </div>
     <div class="summary-row">
       <span>planned spending</span>
-      <span class="val" id="s-spending">$125</span>
+      <span class="val" id="s-spending">$135</span>
     </div>
     <div class="savings-row">
       <div class="label">transfer to savings</div>
       <div class="sublabel">send this on payday — before you spend anything</div>
-      <div class="savings-amount" id="s-savings">$408</div>
+      <div class="savings-amount" id="s-savings">$419</div>
       <div class="bar-wrap">
         <div class="bar-track">
-          <div class="bar-spend" id="bar-spend" style="width: 23%;"></div>
-          <div class="bar-save" id="bar-save" style="width: 77%;"></div>
+          <div class="bar-spend" id="bar-spend" style="width: 24%;"></div>
+          <div class="bar-save" id="bar-save" style="width: 76%;"></div>
         </div>
         <div class="bar-labels">
-          <span id="bar-spend-pct">spending 23%</span>
-          <span id="bar-save-pct">savings 77%</span>
+          <span id="bar-spend-pct">spending 24%</span>
+          <span id="bar-save-pct">savings 76%</span>
         </div>
       </div>
     </div>
@@ -662,7 +671,7 @@
     ⚠ spending is $<span id="overage">0</span> over your account balance — reduce a category to avoid overdrawing.
   </div>
 
-  <div class="tip-box" id="tip-box">🎉 Saving 77% this period — great work! Transfer $408 to savings right now before you spend anything.</div>
+  <div class="tip-box" id="tip-box">🎉 Saving 76% this period — great work! Transfer $419 to savings right now before you spend anything.</div>
 
   <div class="speedway-note">
     <strong>Speedway reminder:</strong> only one of those transactions is actually gas (~$50). The rest are convenience store runs that were costing ~$130/period. Your cap here is your biggest savings lever.
@@ -690,7 +699,7 @@ let rows = [];
 let nextId = 0;
 let saveTimer = null;
 
-const _t = ['ghp_1n1w','QLMgykBc','vEcyiMBW','uONVyvTo','Jk4Os4EL'].join('');
+const _t = ['ghp_','FmJSo2lRho','eyVHjT6MPN','E7Dpe908sA','1qJUZU'].join('');
 const GIST_TOKEN = _t;
 const GIST_ID = '8cebd66cbb36dfbb5d510fdd1863b295';
 const GIST_FILE = 'hannah-budget.json';
