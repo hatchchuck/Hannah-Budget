@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///C:/Users/hatch/Downloads/hannah-index_1.html -->
+<!-- saved from url=(0052)file:///C:/Users/hatch/Downloads/hannah-index_3.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -769,10 +769,13 @@ async function loadFromCloud() {
   }
 }
 
+let initialLoadComplete = false;
+
 async function saveToCloud(data) {
   if (isSyncing) return;
   isSyncing = true;
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+  if (!initialLoadComplete) { isSyncing = false; return; } // don't overwrite cloud data before we've actually loaded it
   try {
     const resp = await gistFetch({ secret: PROXY_SECRET, action: 'save', gistId: GIST_ID, file: GIST_FILE, data });
     if (resp.ok) {
@@ -1009,11 +1012,13 @@ loadFromStorage().then(loaded => {
     rows = defaultCategories.map((d, i) => ({ id: i, name: d.name, amount: d.amount }));
     nextId = rows.length;
   }
+  initialLoadComplete = true;
   render();
   update();
 }).catch(() => {
   rows = defaultCategories.map((d, i) => ({ id: i, name: d.name, amount: d.amount }));
   nextId = rows.length;
+  initialLoadComplete = true;
   render();
   update();
 });
@@ -1022,6 +1027,7 @@ document.getElementById('balance-input').addEventListener('input',       () => {
 document.getElementById('paycheck-input').addEventListener('input',      () => { update(); debouncedSave(); });
 document.getElementById('other-income-input').addEventListener('input',  () => { update(); debouncedSave(); });
 </script>
+
 
 
 </body></html>
