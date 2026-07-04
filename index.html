@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/hatch/Downloads/index_29.html -->
+<!-- saved from url=(0052)file:///C:/Users/hatch/Downloads/hannah-index_1.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -521,7 +521,7 @@
   </div>
 </header>
 
-<div id="sync-warning" style="display:none;background:#3a2a12;border-bottom:2px solid #BA7517;color:#F2C572;font-family:&#39;DM Mono&#39;,monospace;font-size:12px;padding:8px 16px;text-align:center;">
+<div id="sync-warning" style="display: block; background: rgb(58, 42, 18); border-bottom: 2px solid rgb(186, 117, 23); color: rgb(242, 197, 114); font-family: &quot;DM Mono&quot;, monospace; font-size: 12px; padding: 8px 16px; text-align: center;">
   ⚠ Couldn't reach cloud sync — showing data saved on this device only.
   <button onclick="retrySync()" style="margin-left:8px;background:#BA7517;color:#1a1208;border:none;border-radius:4px;padding:3px 10px;font-family:inherit;font-size:11px;cursor:pointer;">Retry</button>
 </div>
@@ -535,10 +535,10 @@
       <input type="number" id="balance-input" value="511" min="0" max="99999" step="1" inputmode="decimal">
     </div>
     <div class="balance-breakdown">
-      <span>Emery $<span id="chip-paycheck">629</span></span>
+      <span>Emery $<span id="chip-paycheck">533</span></span>
       <span class="breakdown-chip carryover" id="chip-other" style="display: none;">+ $50 other</span>
       <span>+</span>
-      <span class="breakdown-chip carryover" id="chip-carryover">$18 leftover</span>
+      <span class="breakdown-chip zero" id="chip-carryover">$0 leftover</span>
     </div>
     <div class="paycheck-sub">
       <label>Emery paycheck amount</label>
@@ -569,7 +569,7 @@
       <input class="row-name" type="text" value="gas (one fill-up)" placeholder="category name" oninput="updateName(0, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="75" min="0" step="1" inputmode="decimal" oninput="updateAmount(0, this.value)">
+        <input class="row-amount" type="number" value="60" min="0" step="1" inputmode="decimal" oninput="updateAmount(0, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(0)" aria-label="remove">×</button>
     </div>
@@ -578,13 +578,13 @@
       <input class="row-name" type="text" value="speedway / convenience" placeholder="category name" oninput="updateName(1, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(1, this.value)">
+        <input class="row-amount" type="number" value="25" min="0" step="1" inputmode="decimal" oninput="updateAmount(1, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(1)" aria-label="remove">×</button>
     </div>
   
     <div class="category-row">
-      <input class="row-name" type="text" value="coffee &amp; treats" placeholder="category name" oninput="updateName(2, this.value)">
+      <input class="row-name" type="text" value="groceries" placeholder="category name" oninput="updateName(2, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
         <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(2, this.value)">
@@ -593,39 +593,30 @@
     </div>
   
     <div class="category-row">
-      <input class="row-name" type="text" value="misc / personal" placeholder="category name" oninput="updateName(3, this.value)">
+      <input class="row-name" type="text" value="dining out" placeholder="category name" oninput="updateName(3, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="10" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
+        <input class="row-amount" type="number" value="40" min="0" step="1" inputmode="decimal" oninput="updateAmount(3, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(3)" aria-label="remove">×</button>
     </div>
   
     <div class="category-row">
-      <input class="row-name" type="text" value="dining out " placeholder="category name" oninput="updateName(4, this.value)">
+      <input class="row-name" type="text" value="coffee &amp; treats" placeholder="category name" oninput="updateName(4, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="20" min="0" step="1" inputmode="decimal" oninput="updateAmount(4, this.value)">
+        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(4, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(4)" aria-label="remove">×</button>
     </div>
   
     <div class="category-row">
-      <input class="row-name" type="text" value="Marykay" placeholder="category name" oninput="updateName(5, this.value)">
+      <input class="row-name" type="text" value="misc / personal" placeholder="category name" oninput="updateName(5, this.value)">
       <div class="row-amount-wrap">
         <span>$</span>
-        <input class="row-amount" type="number" value="0" min="0" step="1" inputmode="decimal" oninput="updateAmount(5, this.value)">
+        <input class="row-amount" type="number" value="20" min="0" step="1" inputmode="decimal" oninput="updateAmount(5, this.value)">
       </div>
       <button class="row-delete" onclick="removeRow(5)" aria-label="remove">×</button>
-    </div>
-  
-    <div class="category-row">
-      <input class="row-name" type="text" value="camp shirts " placeholder="category name" oninput="updateName(6, this.value)">
-      <div class="row-amount-wrap">
-        <span>$</span>
-        <input class="row-amount" type="number" value="70" min="0" step="1" inputmode="decimal" oninput="updateAmount(6, this.value)">
-      </div>
-      <button class="row-delete" onclick="removeRow(6)" aria-label="remove">×</button>
     </div>
   </div>
     <button class="add-row-btn" onclick="addRow()">
@@ -641,24 +632,24 @@
   <div class="summary-card">
     <div class="summary-row">
       <span>account balance</span>
-      <span class="val" id="s-balance">$647</span>
+      <span class="val" id="s-balance">$533</span>
     </div>
     <div class="summary-row carryover-row" id="other-income-row">
       <span>&nbsp;&nbsp;↳ other income</span>
       <span class="val" id="s-other-income">$50</span>
     </div>
-    <div class="summary-row carryover-row visible" id="carryover-row">
+    <div class="summary-row carryover-row" id="carryover-row">
       <span>&nbsp;&nbsp;↳ leftover from last period</span>
-      <span class="val" id="s-carryover">$18</span>
+      <span class="val" id="s-carryover">$0</span>
     </div>
     <div class="summary-row">
       <span>planned spending</span>
-      <span class="val" id="s-spending">$175</span>
+      <span class="val" id="s-spending">$145</span>
     </div>
     <div class="savings-row">
       <div class="label">transfer to savings</div>
       <div class="sublabel">send this on payday — before you spend anything</div>
-      <div class="savings-amount" id="s-savings">$472</div>
+      <div class="savings-amount" id="s-savings">$388</div>
       <div class="bar-wrap">
         <div class="bar-track">
           <div class="bar-spend" id="bar-spend" style="width: 27%;"></div>
@@ -676,7 +667,7 @@
     ⚠ spending is $<span id="overage">0</span> over your account balance — reduce a category to avoid overdrawing.
   </div>
 
-  <div class="tip-box" id="tip-box">🎉 Saving 73% this period — great work! Transfer $472 to savings right now before you spend anything.</div>
+  <div class="tip-box" id="tip-box">🎉 Saving 73% this period — great work! Transfer $388 to savings right now before you spend anything.</div>
 
   <div class="speedway-note">
     <strong>Speedway reminder:</strong> only one of those transactions is actually gas (~$50). The rest are convenience store runs that were costing ~$130/period. Your cap here is your biggest savings lever.
@@ -704,26 +695,30 @@ let rows = [];
 let nextId = 0;
 let saveTimer = null;
 
-const _t = ['ghp_','FmJSo2lRho','eyVHjT6MPN','E7Dpe908sA','1qJUZU'].join('');
-const GIST_TOKEN = _t;
 const GIST_ID = '8cebd66cbb36dfbb5d510fdd1863b295';
 const GIST_FILE = 'hannah-budget.json';
-const GIST_URL = 'https://api.github.com/gists/' + GIST_ID;
+const PROXY_URL = 'https://carsen-dashboard.netlify.app/.netlify/functions/gist-proxy';
+const PROXY_SECRET = 'wKvHQAl1oESH_ZZVN6JYlytdc3aKn_6l';
 let isSyncing = false;
 
-// Generic retry+timeout wrapper for Gist calls. Retries transient failures
-// (network drop, timeout, GitHub 5xx/rate-limit) with backoff; does NOT
-// retry auth/permission errors since those won't fix themselves.
-async function gistFetch(opts, { retries = 2, timeoutMs = 12000 } = {}) {
+// Generic retry+timeout wrapper for proxy calls. Retries transient failures
+// (network drop, timeout, 5xx/rate-limit) with backoff; does NOT retry
+// auth/permission errors since those won't fix themselves.
+async function gistFetch(body, { retries = 2, timeoutMs = 12000 } = {}) {
   let lastErr;
   for (let attempt = 0; attempt <= retries; attempt++) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
-      const resp = await fetch(GIST_URL, { ...opts, signal: controller.signal });
+      const resp = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+        signal: controller.signal
+      });
       clearTimeout(timer);
       if ((resp.status === 429 || resp.status >= 500) && attempt < retries) {
-        lastErr = new Error('gist-transient-' + resp.status);
+        lastErr = new Error('proxy-transient-' + resp.status);
         await new Promise(r => setTimeout(r, 600 * Math.pow(2, attempt)));
         continue;
       }
@@ -758,15 +753,10 @@ async function retrySync() {
 
 async function loadFromCloud() {
   try {
-    const resp = await gistFetch({
-      headers: {
-        'Authorization': 'token ' + GIST_TOKEN,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    });
+    const resp = await gistFetch({ secret: PROXY_SECRET, action: 'load', gistId: GIST_ID, file: GIST_FILE });
     if (resp.ok) {
       const data = await resp.json();
-      const content = data.files[GIST_FILE]?.content;
+      const content = data.content;
       if (content) { hideSyncWarning(); return JSON.parse(content); }
       hideSyncWarning();
       return null;
@@ -784,17 +774,7 @@ async function saveToCloud(data) {
   isSyncing = true;
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
   try {
-    const body = { files: {} };
-    body.files[GIST_FILE] = { content: JSON.stringify(data) };
-    const resp = await gistFetch({
-      method: 'PATCH',
-      headers: {
-        'Authorization': 'token ' + GIST_TOKEN,
-        'Content-Type': 'application/json',
-        'Accept': 'application/vnd.github.v3+json'
-      },
-      body: JSON.stringify(body)
-    });
+    const resp = await gistFetch({ secret: PROXY_SECRET, action: 'save', gistId: GIST_ID, file: GIST_FILE, data });
     if (resp.ok) {
       hideSyncWarning();
       showBadge('✓ saved', 'var(--green, #1D9E75)', 2000);
