@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///C:/Users/hatch/Downloads/hannah-index_3.html -->
+<!-- saved from url=(0046)file:///C:/Users/hatch/Downloads/index_30.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -925,7 +925,7 @@ function update() {
   const otherIncome = getOtherIncome();
   const leftover    = Math.max(0, balance - paycheck - otherIncome);
   const spent       = getTotal();
-  const savings     = balance - spent;
+  const savings     = balance + otherIncome - spent;
 
   // Breakdown chips under the balance field
   document.getElementById('chip-paycheck').textContent = paycheck.toFixed(0);
